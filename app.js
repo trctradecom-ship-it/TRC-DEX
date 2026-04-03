@@ -1,4 +1,4 @@
-const ICO = "0xA6F33c57891E52258d68BC99c593207E5C1B4a51";
+const ICO = "0x8Cd8934C404F064AE847355c743Ebb35b2E3F94d";
 const TRC = "0xc08983be707bf4b763e7A0f3cCAD3fd00af6620d";
 
 let provider, signer, ico, trc, user;
