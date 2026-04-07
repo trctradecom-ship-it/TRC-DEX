@@ -1,5 +1,5 @@
-const ICO = "0x7bA73b7Ef1f1cBaF9440bCE27f399063372355db"; 
-const TRC = "0xc08983be707bf4b763e7A0f3cCAD3fd00af6620d";
+const ICO = "0x2ebC40Bec0E8Dd16551A14248C756fCcCd941092"; 
+const TRC = "0x27ba5f7B7645B70C5F9F78DB5bc51730e7463C43";
 
 let provider, signer, ico, trc, user;
 
