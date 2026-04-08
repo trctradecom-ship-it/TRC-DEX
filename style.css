@@ -261,7 +261,21 @@ box-sizing:border-box;
 
 
 
+/* Buy USDT input */
+#buyUSDT {
+  margin-bottom: 15px;  /* same as above for consistent gap */
+  padding: 8px 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
 
+/* Sell USDT input */
+#sellUSDT {
+  margin-bottom: 15px;  /* consistent spacing */
+  padding: 8px 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
 
 
 
