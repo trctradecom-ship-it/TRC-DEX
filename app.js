@@ -1,7 +1,8 @@
 const ICO = "0x7221bcFC39b47B330f4DE8508A74802eBa52a912"; 
 const TRC = "0x27ba5f7B7645B70C5F9F78DB5bc51730e7463C43";
+const USDT = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F";
 
-let provider, signer, ico, trc, user;
+let provider, signer, ico, trc, user, usdt, USDT_DECIMALS;
 
 const icoABI = [
 "function usdPrice() view returns(uint256)",
@@ -9,13 +10,16 @@ const icoABI = [
 "function buy() payable",
 "function sell(uint256)",
 "function getLastSellTime(address) view returns(uint256)",
-"function SELL_COOLDOWN() view returns(uint256)"
+"function SELL_COOLDOWN() view returns(uint256)",
+"function buyWithUSDT(uint256)",
+"function sellForUSDT(uint256)"
 ];
 
 const erc20ABI = [
 "function balanceOf(address) view returns(uint256)",
 "function approve(address,uint256) returns(bool)",
-"function allowance(address,address) view returns(uint256)"
+"function allowance(address,address) view returns(uint256)",
+"function decimals() view returns(uint8)"
 ];
 
 
@@ -67,7 +71,8 @@ document.getElementById("walletAddress").innerText = user;
 
 ico = new ethers.Contract(ICO, icoABI, signer);
 trc = new ethers.Contract(TRC, erc20ABI, signer);
-
+usdt = new ethers.Contract(USDT, erc20ABI, signer);
+USDT_DECIMALS = await usdt.decimals();
 loadData();
 
 }
@@ -100,6 +105,11 @@ updateChart(trcPrice);
 
 loadCooldown();
 
+let usdtBal = await usdt.balanceOf(user);
+usdtBal = Number(ethers.utils.formatUnits(usdtBal,6));
+
+document.getElementById("usdtBalance").innerText = usdtBal.toFixed(2);
+
 }
 
 
@@ -107,6 +117,11 @@ loadCooldown();
 async function buyTRC(){
 try{
 let amount=document.getElementById("buyAmount").value;
+
+if(!amount || Number(amount) <= 0){
+  alert("Enter valid amount");
+  return;
+}
 await handleTx(
   ico.buy({ value: ethers.utils.parseEther(amount) })
 );
@@ -131,12 +146,74 @@ document.getElementById("status").innerText="Approval Failed";
 // SELL
 async function sellTRC(){
 try{
-let amount=document.getElementById("sellAmount").value;
+let amount = document.getElementById("sellAmount").value;
+if(!amount || Number(amount) <= 0){
+  alert("Enter valid amount");
+  return;
+}
 await handleTx(
   ico.sell(ethers.utils.parseEther(amount))
 );
 }catch(e){
 document.getElementById("status").innerText="Transaction Failed";
+}
+}
+
+// ================= USDT FUNCTIONS =================
+
+// APPROVE USDT
+async function approveUSDT(){
+try{
+await handleTx(
+  usdt.approve(ICO, ethers.constants.MaxUint256)
+);
+}catch(e){
+document.getElementById("status").innerText="USDT Approval Failed";
+}
+}
+
+// BUY WITH USDT
+async function buyWithUSDT(){
+try{
+let amount = document.getElementById("buyUSDT").value;
+if(!amount || Number(amount) <= 0){
+  alert("Enter valid USDT");
+  return;
+}
+
+if(Number(amount) <= 0){
+alert("Enter valid USDT");
+return;
+}
+
+let usdtAmount = ethers.utils.parseUnits(amount, USDT_DECIMALS);
+await handleTx(
+  ico.buyWithUSDT(usdtAmount)
+);
+
+}catch(e){
+document.getElementById("status").innerText="USDT Buy Failed";
+}
+}
+
+// SELL FOR USDT
+async function sellForUSDT(){
+try{
+let amount = document.getElementById("sellUSDT").value;
+
+if(Number(amount) <= 0){
+alert("Enter valid USDT");
+return;
+}
+
+let usdtAmount = ethers.utils.parseUnits(amount, USDT_DECIMALS);
+
+await handleTx(
+  ico.sellForUSDT(usdtAmount)
+);
+
+}catch(e){
+document.getElementById("status").innerText="USDT Sell Failed";
 }
 }
 
@@ -171,6 +248,40 @@ document.getElementById("sellAmount").value =
 polAmount.toFixed(4);
 
 }
+
+// MAX SELL FOR USDT (1%)
+async function maxSellUSDT(){
+
+let trcBal = await trc.balanceOf(user);
+
+// 1% of TRC
+let maxTRC = trcBal.div(100);
+
+// get TRC price
+let trcPrice = await ico.usdPrice();
+trcPrice = Number(ethers.utils.formatUnits(trcPrice,18));
+
+// USDT = $1 → so USD = USDT
+let maxTRCReadable =
+Number(ethers.utils.formatUnits(maxTRC,18));
+
+let usdValue = maxTRCReadable * trcPrice;
+
+// minimum $1 rule
+let usdtAmount;
+
+if(usdValue < 1){
+usdtAmount = 1;
+}else{
+usdtAmount = usdValue;
+}
+
+// set input
+document.getElementById("sellUSDT").value =
+usdtAmount.toFixed(2);
+
+}
+
 
 
 // COOLDOWN TIMER
