@@ -261,23 +261,6 @@ box-sizing:border-box;
 
 
 
-/* Remove extra spacing between label and input */
-#buyUSDT,
-#sellUSDT {
-  margin-top: 0;      /* remove any top margin */
-  margin-bottom: 15px; /* space below input for next element */
-  padding: 8px 10px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* Also fix the labels above inputs */
-.usdt-section h4 {
-  margin-top: 0;     /* remove top margin */
-  margin-bottom: 5px; /* small gap between label and input */
-  font-weight: normal; /* optional: lighter font if you want */
-}
-
 
 
 
