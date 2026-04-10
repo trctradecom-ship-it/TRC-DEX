@@ -13,7 +13,8 @@ const icoABI = [
 "function getLastSellTime(address) view returns(uint256)",
 "function SELL_COOLDOWN() view returns(uint256)",
 "function buyWithUSDT(uint256)",
-"function sellForUSDT(uint256)"
+"function sellForUSDT(uint256)",
+"function getUSDTLiquidity() view returns(uint256)"
 ];
 
 const erc20ABI = [
@@ -110,7 +111,17 @@ let usdtBal = await usdt.balanceOf(user);
 usdtBal = Number(ethers.utils.formatUnits(usdtBal,6));
 
 document.getElementById("usdtBalance").innerText = usdtBal.toFixed(2);
+// ================= USDT LIQUIDITY =================
+let usdtLiquidity = await ico.getUSDTLiquidity();
 
+usdtLiquidity = Number(
+  ethers.utils.formatUnits(usdtLiquidity, USDT_DECIMALS)
+);
+
+document.getElementById("usdtLiquidity").innerText =
+  usdtLiquidity.toFixed(2);
+// =================================================
+  
 }
 
 
