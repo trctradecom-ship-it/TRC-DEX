@@ -501,44 +501,21 @@ input:focus{
 
 
 
-
-
 /* =========================
-   CONNECT WALLET GOLD BUTTON
+   CONNECT WALLET - PREMIUM LIGHT PURPLE
 ========================= */
 
 header button{
-  background: linear-gradient(135deg, #facc15, #f59e0b, #d97706);
+  background: linear-gradient(180deg, #c4b5fd, #a78bfa);
   color: #1a1a1a;
-  font-weight: 700;
-  border: none;
-  border-radius: 10px;
 
-  padding: 10px 16px;
+  font-weight: 600;
+  border: 1px solid rgba(167, 139, 250, 0.5);
+  border-radius: 8px;
+
+  padding: 10px 14px;
   cursor: pointer;
 
-  box-shadow:
-    0 4px 15px rgba(250, 204, 21, 0.25),
-    0 0 20px rgba(250, 204, 21, 0.15);
-
-  transition: all 0.25s ease;
-  letter-spacing: 0.3px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  letter-spacing: 0.2px;
 }
-
-/* hover glow premium effect */
-header button:hover{
-  transform: translateY(-2px) scale(1.03);
-  box-shadow:
-    0 6px 22px rgba(250, 204, 21, 0.4),
-    0 0 30px rgba(250, 204, 21, 0.25);
-}
-
-/* click effect */
-header button:active{
-  transform: scale(0.98);
-  box-shadow:
-    0 3px 12px rgba(250, 204, 21, 0.2);
-}
-
-
- 
