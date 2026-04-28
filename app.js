@@ -172,6 +172,8 @@ document.getElementById("usdtLiquidity").innerText =
   usdtLiquidity.toFixed(2);
 // =================================================
 
+try {
+
 // ================= POL LIQUIDITY =================
 let contractPOL = await ico.getContractPOLBalance();
 contractPOL = Number(ethers.utils.formatEther(contractPOL));
@@ -181,8 +183,8 @@ document.getElementById("polLiquidity").innerText =
 
 
 // ================= TRC LIQUIDITY =================
-// IMPORTANT: direct TRC contract (no ico.token)
-let trcContract = new ethers.Contract(TRC, erc20ABI, signer);
+// IMPORTANT: use provider (NOT signer)
+let trcContract = new ethers.Contract(TRC, erc20ABI, provider);
 
 let trcLiquidity = await trcContract.balanceOf(ICO);
 trcLiquidity = Number(ethers.utils.formatUnits(trcLiquidity, 18));
@@ -190,6 +192,9 @@ trcLiquidity = Number(ethers.utils.formatUnits(trcLiquidity, 18));
 document.getElementById("trcLiquidity").innerText =
   trcLiquidity.toFixed(4);
 
+} catch (err) {
+  console.log("Liquidity error:", err);
+}
   
 }
 
