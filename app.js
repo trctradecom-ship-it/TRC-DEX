@@ -365,27 +365,36 @@ h+"h "+m+"m "+s+"s";
 
 
 // =======================
-// CHART (UNCHANGED)
+// PREMIUM SMOOTH CHART
+// Replace old chart section fully
 // =======================
-let chart, series;
-let displayedPrice = 0; // smooth animation price
 
+let chart, series;
+let displayedPrice = 0;   // shown price
+let targetPrice = 0;      // real price
+let chartStarted = false;
+
+
+// =======================
+// CREATE CHART
+// =======================
 window.addEventListener("load", () => {
 
-  const chartContainer = document.getElementById("chart");
+  const chartContainer =
+    document.getElementById("chart");
 
   chart = LightweightCharts.createChart(chartContainer,{
     width: chartContainer.clientWidth,
     height: 400,
 
     layout:{
-      background:{color:"#111"},
+      background:{ color:"#111" },
       textColor:"#DDD"
     },
 
     grid:{
-      vertLines:{color:"#222"},
-      horzLines:{color:"#222"}
+      vertLines:{ color:"#222" },
+      horzLines:{ color:"#222" }
     },
 
     timeScale:{
@@ -396,90 +405,113 @@ window.addEventListener("load", () => {
     rightPriceScale:{
       autoScale:true,
       scaleMargins:{
-       top:0.2,
-       bottom:0.2
-     }
-   }
-  });
+        top:0.20,
+        bottom:0.20
+      }
+    }
 
-  
+  });
 
   series = chart.addLineSeries({
     color:"#00eaff",
     lineWidth:3
   });
 
-  chart.timeScale().fitContent();
-
 });
 
+
+// =======================
+// CONNECT WALLET START
+// 0 -> current live price
+// =======================
 function setInitialChart(price){
 
-  if(!series) return; // ✅ FIX
+  if(!series) return;
+
+  targetPrice = Number(price);
+  displayedPrice = 0;
 
   let now = Math.floor(Date.now()/1000);
 
   let data = [];
 
-  for(let i = 30; i > 0; i--){
+  // flat zero history
+  for(let i=20;i>0;i--){
     data.push({
-      time: now - i * 60,
+      time: now - i,
       value: 0
     });
   }
 
   series.setData(data);
+
+  chartStarted = true;
 }
 
 
+// =======================
+// LIVE PRICE UPDATE
+// call on loadData + events
+// =======================
+function updateChart(newPrice){
 
-let lastPrice = null;
+  targetPrice = Number(newPrice);
 
-function updateChart(targetPrice){
+}
 
-  if(!series) return;
 
-  targetPrice = Number(targetPrice);
+// =======================
+// SMOOTH ENGINE
+// =======================
+setInterval(()=>{
+
+  if(!chartStarted || !series) return;
 
   let now = Math.floor(Date.now()/1000);
 
-  // first time → start from 0 → go to price
-  if(displayedPrice === 0){
+  let diff = targetPrice - displayedPrice;
+
+  // snap when close
+  if(Math.abs(diff) < 0.0001){
+
     displayedPrice = targetPrice;
+
+  }else{
+
+    // smooth move
+    displayedPrice += diff * 0.15;
+
   }
-
-  // smooth movement
-  let step = (targetPrice - displayedPrice) * 0.1;
-
-  displayedPrice += step;
 
   series.update({
     time: now,
-    value: displayedPrice
+    value: Number(displayedPrice.toFixed(6))
   });
 
-}
+},1000);
 
+
+// =======================
 // AUTO REFRESH
+// =======================
 setInterval(()=>{
-if(user) loadData();
+  if(user) loadData();
 },60000);
 
-// 🎯 smooth animation every 1s
-setInterval(() => {
-  if(displayedPrice > 0){
-    updateChart(displayedPrice);
-  }
-}, 1000);
 
+// =======================
 // RESIZE
+// =======================
 window.addEventListener("resize", () => {
-  if (!chart) return;
 
-  const container = document.getElementById("chart");
+  if(!chart) return;
+
+  const container =
+    document.getElementById("chart");
 
   chart.resize(
     container.clientWidth,
     container.clientHeight
   );
+
 });
