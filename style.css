@@ -504,52 +504,44 @@ input:focus{
 
 
 
-
-
-
-
- /* ============================= */
-/* USDT SECTION CLEAN UI (FIX GAP + SIZE) */
+/* ============================= */
+/* ONLY USDT GAP FIX (NO STYLE CHANGE) */
 /* ============================= */
 
-/* reduce spacing between headings */
+/* reduce space between headings */
 .tradeBox h3,
 .tradeBox h4{
-  margin: 6px 0 !important;
-  font-size: 16px;
+  margin-top: 6px !important;
+  margin-bottom: 4px !important;
 }
 
-/* paragraph spacing tighter */
+/* reduce space between paragraph lines */
 .tradeBox p{
-  margin: 3px 0 !important;
-  font-size: 13px;
+  margin-top: 2px !important;
+  margin-bottom: 2px !important;
 }
 
-/* reduce gap between inputs */
+/* reduce gap around inputs */
 #buyUSDT,
 #sellUSDT{
-  margin: 4px 0 !important;
-  padding: 14px !important;   /* slightly bigger input */
-  font-size: 15px;
+  margin-top: 4px !important;
+  margin-bottom: 4px !important;
 }
 
-/* reduce button spacing */
+/* reduce button gap */
 .tradeBox button{
-  margin-top: 5px !important;
-  padding: 13px !important;
-  font-size: 14px;
+  margin-top: 4px !important;
 }
 
-/* HR spacing (divider) */
+/* reduce divider spacing */
 .tradeBox hr{
-  margin: 10px 0 !important;
-  opacity: 0.3;
+  margin: 8px 0 !important;
 }
 
-/* cooldown spacing */
-.cooldown{
-  margin-top: 8px !important;
-}
+
+
+
+
 
 
 
