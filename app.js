@@ -457,10 +457,10 @@ window.addEventListener("load", () => {
     }
   });
 
-  series = chart.addLineSeries({
-    color:"#00eaff",
-    lineWidth:3
-  });
+ series = chart.addLineSeries({
+   color: "#16a34a",
+   lineWidth: 3
+});
 
 });
 
