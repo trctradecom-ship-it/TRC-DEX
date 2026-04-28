@@ -393,26 +393,28 @@ window.addEventListener("load", () => {
     },
 
     rightPriceScale:{
-      autoScale:false,
+      autoScale:true,
       scaleMargins:{
-        top:0.2,
-        bottom:0.2
-      }
-    }
+       top:0.2,
+       bottom:0.2
+     }
+   }
   });
 
-  chart.priceScale("right").applyOptions({
-    autoScale:false
-  });
+  
 
   series = chart.addLineSeries({
     color:"#00eaff",
     lineWidth:3
   });
 
+  chart.timeScale().fitContent();
+
 });
 
 function setInitialChart(price){
+
+  if(!series) return; // ✅ FIX
 
   let now = Math.floor(Date.now()/1000);
 
@@ -429,17 +431,17 @@ function setInitialChart(price){
 }
 
 
-chart.timeScale().fitContent();
 
 let lastPrice = null;
 
 function updateChart(price){
 
+  if(!series) return; // ✅ FIX (chart not ready)
+
   price = Number(price);
 
   let now = Math.floor(Date.now()/1000);
 
-  // 🔥 amplify movement (so chart not flat)
   if(lastPrice !== null){
     let diff = price - lastPrice;
     price = lastPrice + diff * 20;
@@ -452,7 +454,6 @@ function updateChart(price){
 
   lastPrice = price;
 }
-
 
 // AUTO REFRESH
 setInterval(()=>{
