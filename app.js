@@ -15,6 +15,7 @@ const icoABI = [
 "function buyWithUSDT(uint256)",
 "function sellForUSDT(uint256)",
 "function getUSDTLiquidity() view returns(uint256)",
+"function getContractPOLBalance() view returns(uint256)",
 "event PriceUpdated(uint256 price)"
 ];
 
@@ -172,29 +173,26 @@ document.getElementById("usdtLiquidity").innerText =
   usdtLiquidity.toFixed(2);
 // =================================================
 
-try {
-
-// ================= POL LIQUIDITY =================
-let contractPOL = await ico.getContractPOLBalance();
-contractPOL = Number(ethers.utils.formatEther(contractPOL));
-
-document.getElementById("polLiquidity").innerText =
-  contractPOL.toFixed(4);
-
-
 // ================= TRC LIQUIDITY =================
-// IMPORTANT: use provider (NOT signer)
-let trcContract = new ethers.Contract(TRC, erc20ABI, provider);
+let trcLiquidity = await trc.balanceOf(ICO);
 
-let trcLiquidity = await trcContract.balanceOf(ICO);
-trcLiquidity = Number(ethers.utils.formatUnits(trcLiquidity, 18));
+trcLiquidity = Number(
+  ethers.utils.formatUnits(trcLiquidity, 18)
+);
 
 document.getElementById("trcLiquidity").innerText =
   trcLiquidity.toFixed(4);
 
-} catch (err) {
-  console.log("Liquidity error:", err);
-}
+
+// ================= POL LIQUIDITY =================
+let polLiquidity = await ico.getContractPOLBalance();
+
+polLiquidity = Number(
+  ethers.utils.formatEther(polLiquidity)
+);
+
+document.getElementById("polLiquidity").innerText =
+  polLiquidity.toFixed(4);
   
 }
 
