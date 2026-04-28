@@ -14,7 +14,8 @@ const icoABI = [
 "function SELL_COOLDOWN() view returns(uint256)",
 "function buyWithUSDT(uint256)",
 "function sellForUSDT(uint256)",
-"function getUSDTLiquidity() view returns(uint256)"
+"function getUSDTLiquidity() view returns(uint256)",
+"event PriceUpdated(uint256 price)"
 ];
 
 const erc20ABI = [
@@ -76,9 +77,28 @@ trc = new ethers.Contract(TRC, erc20ABI, signer);
 usdt = new ethers.Contract(USDT, erc20ABI, signer);
 USDT_DECIMALS = await usdt.decimals();
 loadData();
-
+listenToEvents();
 }
 
+
+function listenToEvents(){
+
+  if(!ico) return;
+
+  // remove old listeners (important)
+  ico.removeAllListeners("PriceUpdated");
+
+  ico.on("PriceUpdated", (price) => {
+
+    let formatted = Number(
+      ethers.utils.formatUnits(price, 18)
+    );
+
+    updateChart(formatted);
+
+  });
+
+}
 
 // LOAD DATA
 async function loadData(){
