@@ -96,15 +96,34 @@ function listenToEvents(){
 
   if(!ico) return;
 
-  // remove old listeners (important)
+  // remove old listeners
   ico.removeAllListeners("PriceUpdated");
 
   ico.on("PriceUpdated", (price) => {
 
     let formatted = Number(
-      ethers.utils.formatUnits(price, 18)
+      ethers.utils.formatUnits(price,18)
     );
 
+    // =========================
+    // INSTANT TEXT PRICE UPDATE
+    // =========================
+    document.getElementById("trcPrice").innerText =
+      "$" + formatted.toFixed(2);
+
+    // =========================
+    // INSTANT WALLET VALUE UPDATE
+    // =========================
+    let bal = parseFloat(
+      document.getElementById("trcBalance").innerText
+    ) || 0;
+
+    document.getElementById("trcValue").innerText =
+      "$" + (bal * formatted).toFixed(2);
+
+    // =========================
+    // CHART UPDATE
+    // =========================
     updateChart(formatted);
 
   });
