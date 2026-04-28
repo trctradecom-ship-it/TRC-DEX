@@ -76,8 +76,19 @@ ico = new ethers.Contract(ICO, icoABI, signer);
 trc = new ethers.Contract(TRC, erc20ABI, signer);
 usdt = new ethers.Contract(USDT, erc20ABI, signer);
 USDT_DECIMALS = await usdt.decimals();
-loadData();
-listenToEvents();
+  
+  // ✅ 1. load data FIRST
+  await loadData();
+
+  // ✅ 2. get current price
+  let trcPrice = await ico.usdPrice();
+  trcPrice = Number(ethers.utils.formatUnits(trcPrice,18));
+
+  // ✅ 3. initialize chart (ONLY ONCE)
+  setInitialChart(trcPrice);
+
+  // ✅ 4. start listening to events
+  listenToEvents();
 }
 
 
@@ -124,7 +135,7 @@ document.getElementById("trcValue").innerText =
 "$"+(trcBal*trcPrice).toFixed(2);
 
 updateChart(trcPrice);
-setInitialChart(trcPrice);
+
 loadCooldown();
 
 let usdtBal = await usdt.balanceOf(user);
@@ -356,45 +367,49 @@ h+"h "+m+"m "+s+"s";
 // =======================
 // CHART (UNCHANGED)
 // =======================
+let chart, series;
 
-const chartContainer = document.getElementById("chart");
-const chart = LightweightCharts.createChart(chartContainer,{
-width: chartContainer.clientWidth,
-height: 400,
+window.addEventListener("load", () => {
 
-layout:{
-background:{color:"#111"},
-textColor:"#DDD"}
-,
+  const chartContainer = document.getElementById("chart");
 
-grid:{
-vertLines:{color:"#222"},
-horzLines:{color:"#222"}
-},
+  chart = LightweightCharts.createChart(chartContainer,{
+    width: chartContainer.clientWidth,
+    height: 400,
 
-timeScale:{
-timeVisible:true,
-secondsVisible:false,
-rightBarStaysOnScroll:true
-},
+    layout:{
+      background:{color:"#111"},
+      textColor:"#DDD"
+    },
 
-rightPriceScale:{
-autoScale:false,
-scaleMargins:{
-top:0.2,
-bottom:0.2
-}
-}
-  
-});
+    grid:{
+      vertLines:{color:"#222"},
+      horzLines:{color:"#222"}
+    },
 
-chart.priceScale("right").applyOptions({
-  autoScale: false,
-});
+    timeScale:{
+      timeVisible:true,
+      secondsVisible:false
+    },
 
-const series = chart.addLineSeries({
-color:"#00eaff",
-lineWidth:3
+    rightPriceScale:{
+      autoScale:false,
+      scaleMargins:{
+        top:0.2,
+        bottom:0.2
+      }
+    }
+  });
+
+  chart.priceScale("right").applyOptions({
+    autoScale:false
+  });
+
+  series = chart.addLineSeries({
+    color:"#00eaff",
+    lineWidth:3
+  });
+
 });
 
 function setInitialChart(price){
@@ -447,8 +462,12 @@ if(user) loadData();
 
 // RESIZE
 window.addEventListener("resize", () => {
+  if (!chart) return;
+
+  const container = document.getElementById("chart");
+
   chart.resize(
-    chartContainer.clientWidth,
-    chartContainer.clientHeight
+    container.clientWidth,
+    container.clientHeight
   );
 });
