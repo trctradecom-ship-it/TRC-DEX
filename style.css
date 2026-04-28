@@ -264,4 +264,269 @@ box-sizing:border-box;
 
 
 
+
+
+
+
+
+
+/* =========================
+   BASE
+========================= */
+body{
+  background: radial-gradient(circle at top, #0f0f0f, #050505);
+  color:white;
+  font-family:Arial, sans-serif;
+  margin:0;
+}
+
+/* =========================
+   HEADER
+========================= */
+header{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 16px;
+  background:#0b0b0b;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+
+header h2{
+  margin:0;
+  font-size:18px;
+  color:#fff;
+  letter-spacing:0.5px;
+}
+
+#walletAddress{
+  font-size:12px;
+  opacity:0.7;
+  word-break:break-all;
+}
+
+/* =========================
+   STATS GRID
+========================= */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  padding:12px;
+}
+
+.box{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.06);
+  padding:12px;
+  text-align:center;
+  border-radius:10px;
+  font-size:13px;
+  transition:0.3s;
+}
+
+.box:hover{
+  transform:translateY(-2px);
+  border-color:rgba(59,130,246,0.4);
+}
+
+/* =========================
+   MAIN LAYOUT
+========================= */
+.main{
+  display:flex;
+  gap:16px;
+  padding:12px;
+}
+
+/* =========================
+   CHART
+========================= */
+.chartBox{
+  flex:2;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.05);
+  border-radius:14px;
+  padding:10px;
+  box-shadow:0 0 20px rgba(0,0,0,0.4);
+}
+
+#chart{
+  width:100%;
+  height:420px;
+}
+
+/* =========================
+   TRADE PANEL BASE
+========================= */
+.tradeBox{
+  flex:1;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.05);
+  padding:14px;
+  border-radius:14px;
+  box-shadow:0 0 25px rgba(0,0,0,0.5);
+}
+
+/* section divider */
+.tradeBox h3, .tradeBox h4{
+  margin:10px 0 6px;
+}
+
+/* =========================
+   INPUTS
+========================= */
+input{
+  width:100%;
+  padding:12px;
+  margin-top:8px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  color:white;
+  border-radius:10px;
+  font-size:14px;
+  transition:0.3s;
+}
+
+input:focus{
+  outline:none;
+  border-color:#3b82f6;
+  box-shadow:0 0 10px rgba(59,130,246,0.3);
+}
+
+/* =========================
+   BUTTONS BASE
+========================= */
+button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  color:white;
+  border-radius:10px;
+  font-size:14px;
+  cursor:pointer;
+  transition:0.25s;
+  position:relative;
+  overflow:hidden;
+}
+
+/* shimmer */
+button::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.25),transparent);
+  transition:0.5s;
+}
+
+button:hover::after{
+  left:100%;
+}
+
+/* =========================
+   🟣 TRC SECTION STYLE
+========================= */
+.tradeBox h3:nth-of-type(1),
+.tradeBox h3:nth-of-type(2){
+  color:#c084fc;
+}
+
+button{
+  background:linear-gradient(135deg,#3b82f6,#2563eb);
+}
+
+button:hover{
+  transform:scale(1.02);
+  box-shadow:0 0 15px rgba(59,130,246,0.4);
+}
+
+/* =========================
+   🟢 USDT SECTION STYLE
+========================= */
+.tradeBox hr{
+  border:0;
+  height:1px;
+  background:rgba(255,255,255,0.08);
+  margin:16px 0;
+}
+
+.tradeBox h3:nth-of-type(3){
+  color:#22c55e;
+}
+
+.tradeBox h4{
+  color:#16a34a;
+}
+
+/* USDT buttons green override */
+.tradeBox button:nth-of-type(4),
+.tradeBox button:nth-of-type(5),
+.tradeBox button:nth-of-type(6){
+  background:linear-gradient(135deg,#22c55e,#15803d);
+}
+
+.tradeBox button:nth-of-type(4):hover,
+.tradeBox button:nth-of-type(5):hover,
+.tradeBox button:nth-of-type(6):hover{
+  box-shadow:0 0 15px rgba(34,197,94,0.4);
+}
+
+/* =========================
+   COOLDOWN + STATUS
+========================= */
+.cooldown{
+  margin-top:12px;
+  color:#facc15;
+  font-size:13px;
+}
+
+#status{
+  margin-top:10px;
+  font-size:13px;
+  color:#4ade80;
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+@media (max-width:900px){
+  .main{
+    flex-direction:column;
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  #chart{
+    height:300px;
+  }
+}
+
+@media (max-width:500px){
+  header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
+  }
+
+  #chart{
+    height:260px;
+  }
+
+  button{
+    font-size:13px;
+  }
+}
+
+
+
+
+
+
  
