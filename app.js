@@ -364,16 +364,20 @@ h+"h "+m+"m "+s+"s";
 }
 
 
+
 // =======================
-// FINAL CHART (LEFT -> RIGHT FAST CURVE IN 2 SEC)
-// Replace full old chart section
+// PERFECT LEFT -> RIGHT CURVE INTRO
+// then live smooth events
+// Replace FULL old chart section
 // =======================
 
 let chart, series;
 let displayedPrice = 0;
 let targetPrice = 0;
+
 let chartStarted = false;
-let introDone = false;
+let introRunning = false;
+let introFinished = false;
 
 
 // =======================
@@ -421,70 +425,107 @@ window.addEventListener("load", () => {
 
 
 // =======================
-// CONNECT WALLET START
-// draw left -> right 0 to live price in 2 sec
+// CONNECT WALLET INTRO
+// 0 -> current price in 2 sec
+// no price label until reached
 // =======================
 function setInitialChart(price){
 
   if(!series) return;
 
   targetPrice = Number(price);
-  displayedPrice = targetPrice;
+  displayedPrice = 0;
+
   chartStarted = true;
-  introDone = false;
+  introRunning = true;
+  introFinished = false;
 
   let now = Math.floor(Date.now()/1000);
-  let data = [];
 
-  // 20 points curve from left to right
-  for(let i=20;i>=0;i--){
+  // hide live label during intro
+  series.applyOptions({
+    lastValueVisible:false,
+    priceLineVisible:false
+  });
 
-    let progress = (20 - i) / 20; // 0 to 1
+  let points = [];
+  let totalFrames = 20; // 20 frames = 2 sec
+  let frame = 0;
+
+  let introTimer = setInterval(()=>{
+
+    frame++;
+
+    let progress = frame / totalFrames;
 
     // smooth curve easing
     let curve =
-      targetPrice * (1 - Math.pow(1-progress,2));
+      targetPrice * (1 - Math.pow(1-progress,3));
 
-    data.push({
-      time: now - i,
+    points.push({
+      time: now - (totalFrames - frame),
       value: Number(curve.toFixed(6))
     });
-  }
 
-  series.setData(data);
-  chart.timeScale().fitContent();
+    series.setData(points);
 
-  // intro done after 2 sec
-  setTimeout(()=>{
-    introDone = true;
-  },2000);
+    if(frame >= totalFrames){
 
+      clearInterval(introTimer);
+
+      displayedPrice = targetPrice;
+
+      // show price label now
+      series.applyOptions({
+        lastValueVisible:true,
+        priceLineVisible:true
+      });
+
+      chart.timeScale().fitContent();
+
+      introRunning = false;
+      introFinished = true;
+    }
+
+  },100); // 100ms x 20 = 2 sec
 }
 
 
+
 // =======================
-// REAL PRICE UPDATE
+// UPDATE TARGET PRICE
 // =======================
 function updateChart(newPrice){
+
   targetPrice = Number(newPrice);
+
 }
+
 
 
 // =======================
 // LIVE EVENT MOVEMENT
+// after intro only
 // =======================
 setInterval(()=>{
 
-  if(!chartStarted || !introDone || !series) return;
+  if(!chartStarted) return;
+  if(introRunning) return;
+  if(!introFinished) return;
 
   let now = Math.floor(Date.now()/1000);
 
   let diff = targetPrice - displayedPrice;
 
   if(Math.abs(diff) < 0.0001){
+
     displayedPrice = targetPrice;
+
   }else{
+
+    // smooth event move
     displayedPrice += diff * 0.18;
+
   }
 
   series.update({
@@ -495,12 +536,14 @@ setInterval(()=>{
 },1000);
 
 
+
 // =======================
 // AUTO REFRESH
 // =======================
 setInterval(()=>{
   if(user) loadData();
 },60000);
+
 
 
 // =======================
