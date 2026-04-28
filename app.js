@@ -124,7 +124,7 @@ document.getElementById("trcValue").innerText =
 "$"+(trcBal*trcPrice).toFixed(2);
 
 updateChart(trcPrice);
-
+setInitialChart(trcPrice);
 loadCooldown();
 
 let usdtBal = await usdt.balanceOf(user);
@@ -379,13 +379,17 @@ rightBarStaysOnScroll:true
 },
 
 rightPriceScale:{
-autoScale:true,
+autoScale:false,
 scaleMargins:{
-top:0.25,
-bottom:0.25
+top:0.2,
+bottom:0.2
 }
 }
+  
+});
 
+chart.priceScale("right").applyOptions({
+  autoScale: false,
 });
 
 const series = chart.addLineSeries({
@@ -393,9 +397,26 @@ color:"#00eaff",
 lineWidth:3
 });
 
+function setInitialChart(price){
+
+  let now = Math.floor(Date.now()/1000);
+
+  let data = [];
+
+  for(let i = 30; i > 0; i--){
+    data.push({
+      time: now - i * 60,
+      value: price
+    });
+  }
+
+  series.setData(data);
+}
+
+
 chart.timeScale().fitContent();
 
-let lastPrice = 0;
+let lastPrice = null;
 
 function updateChart(price){
 
@@ -403,11 +424,18 @@ function updateChart(price){
 
   let now = Math.floor(Date.now()/1000);
 
+  // 🔥 amplify movement (so chart not flat)
+  if(lastPrice !== null){
+    let diff = price - lastPrice;
+    price = lastPrice + diff * 20;
+  }
+
   series.update({
     time: now,
     value: price
   });
 
+  lastPrice = price;
 }
 
 
