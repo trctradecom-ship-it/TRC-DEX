@@ -270,4 +270,106 @@ box-sizing:border-box;
 
 
 
+/* =========================
+   POL / TRC SECTION (PURPLE THEME)
+========================= */
+.stats .box{
+  background: linear-gradient(145deg, #1a1033, #0b0b10) !important;
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  box-shadow: 0 0 18px rgba(168, 85, 247, 0.15);
+  transition: 0.3s ease;
+}
+
+.stats .box:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 0 25px rgba(168, 85, 247, 0.35);
+}
+
+/* TRC + POL text glow */
+.stats .box div{
+  color: #c4b5fd;
+  font-weight: bold;
+}
+
+
+/* =========================
+   USDT SECTION (GOLD BOX)
+========================= */
+.tradeBox{
+  background: linear-gradient(145deg, #1a1405, #0b0b10) !important;
+  border: 1px solid rgba(250, 204, 21, 0.25);
+  box-shadow: 0 0 25px rgba(250, 204, 21, 0.08);
+}
+
+/* USDT heading glow */
+.tradeBox h3, .tradeBox h4{
+  color: #facc15;
+  text-shadow: 0 0 10px rgba(250, 204, 21, 0.3);
+}
+
+
+/* =========================
+   PREMIUM BUTTONS (GOLD + BLUE MIX)
+========================= */
+button{
+  background: linear-gradient(90deg, #facc15, #f59e0b) !important;
+  color: #0b0b10 !important;
+  font-weight: bold;
+  border-radius: 12px !important;
+  box-shadow: 0 0 15px rgba(250, 204, 21, 0.25);
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* hover glow + lift */
+button:hover{
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 25px rgba(250, 204, 21, 0.45);
+}
+
+/* animated shine effect */
+button::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.4),
+    transparent
+  );
+  transform: skewX(-20deg);
+}
+
+button:hover::before{
+  animation: shine 0.8s ease;
+}
+
+@keyframes shine{
+  100%{
+    left: 130%;
+  }
+}
+
+
+/* =========================
+   INPUT PREMIUM CLEAN GLOW
+========================= */
+input:focus{
+  border: 1px solid rgba(250, 204, 21, 0.5) !important;
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.2) !important;
+}
+
+
+
+
+
+
+
+
+
  
