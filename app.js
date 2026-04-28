@@ -399,22 +399,14 @@ let lastPrice = 0;
 
 function updateChart(price){
 
-price = Number(price);
+  price = Number(price);
 
-let now = Math.floor(Date.now()/1000);
+  let now = Math.floor(Date.now()/1000);
 
-if(lastPrice === 0){
-lastPrice = price;
-}
-
-let smoothPrice = lastPrice + (price - lastPrice) * 0.05;
-
-series.update({
-time: now,
-value: smoothPrice
-});
-
-lastPrice = smoothPrice;
+  series.update({
+    time: now,
+    value: price
+  });
 
 }
 
