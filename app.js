@@ -365,14 +365,15 @@ h+"h "+m+"m "+s+"s";
 
 
 // =======================
-// PREMIUM SMOOTH CHART
-// Replace old chart section fully
+// FINAL CHART (LEFT -> RIGHT FAST CURVE IN 2 SEC)
+// Replace full old chart section
 // =======================
 
 let chart, series;
-let displayedPrice = 0;   // shown price
-let targetPrice = 0;      // real price
+let displayedPrice = 0;
+let targetPrice = 0;
 let chartStarted = false;
+let introDone = false;
 
 
 // =======================
@@ -409,7 +410,6 @@ window.addEventListener("load", () => {
         bottom:0.20
       }
     }
-
   });
 
   series = chart.addLineSeries({
@@ -422,68 +422,69 @@ window.addEventListener("load", () => {
 
 // =======================
 // CONNECT WALLET START
-// 0 -> current live price
+// draw left -> right 0 to live price in 2 sec
 // =======================
 function setInitialChart(price){
 
   if(!series) return;
 
   targetPrice = Number(price);
-  displayedPrice = 0;
+  displayedPrice = targetPrice;
+  chartStarted = true;
+  introDone = false;
 
   let now = Math.floor(Date.now()/1000);
-
   let data = [];
 
-  // flat zero history
-  for(let i=20;i>0;i--){
+  // 20 points curve from left to right
+  for(let i=20;i>=0;i--){
+
+    let progress = (20 - i) / 20; // 0 to 1
+
+    // smooth curve easing
+    let curve =
+      targetPrice * (1 - Math.pow(1-progress,2));
+
     data.push({
       time: now - i,
-      value: 0
+      value: Number(curve.toFixed(6))
     });
   }
 
   series.setData(data);
+  chart.timeScale().fitContent();
 
-  chartStarted = true;
+  // intro done after 2 sec
+  setTimeout(()=>{
+    introDone = true;
+  },2000);
+
 }
 
 
 // =======================
-// LIVE PRICE UPDATE
-// call on loadData + events
+// REAL PRICE UPDATE
 // =======================
 function updateChart(newPrice){
-
   targetPrice = Number(newPrice);
-
 }
 
 
 // =======================
-// SMOOTH ENGINE
+// LIVE EVENT MOVEMENT
 // =======================
 setInterval(()=>{
 
-  if(!chartStarted || !series) return;
+  if(!chartStarted || !introDone || !series) return;
 
   let now = Math.floor(Date.now()/1000);
 
   let diff = targetPrice - displayedPrice;
 
   if(Math.abs(diff) < 0.0001){
-
     displayedPrice = targetPrice;
-
   }else{
-
-    // connect wallet fast jump 0 -> live price
-    if(displayedPrice < targetPrice * 0.98){
-      displayedPrice += diff * 0.80;
-    }else{
-      displayedPrice += diff * 0.15;
-    }
-
+    displayedPrice += diff * 0.18;
   }
 
   series.update({
