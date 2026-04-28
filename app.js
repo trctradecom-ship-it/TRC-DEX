@@ -368,6 +368,7 @@ h+"h "+m+"m "+s+"s";
 // CHART (UNCHANGED)
 // =======================
 let chart, series;
+let displayedPrice = 0; // smooth animation price
 
 window.addEventListener("load", () => {
 
@@ -423,7 +424,7 @@ function setInitialChart(price){
   for(let i = 30; i > 0; i--){
     data.push({
       time: now - i * 60,
-      value: price
+      value: 0
     });
   }
 
@@ -434,25 +435,29 @@ function setInitialChart(price){
 
 let lastPrice = null;
 
-function updateChart(price){
+function updateChart(targetPrice){
 
-  if(!series) return; // ✅ FIX (chart not ready)
+  if(!series) return;
 
-  price = Number(price);
+  targetPrice = Number(targetPrice);
 
   let now = Math.floor(Date.now()/1000);
 
-  if(lastPrice !== null){
-    let diff = price - lastPrice;
-    price = lastPrice + diff * 20;
+  // first time → start from 0 → go to price
+  if(displayedPrice === 0){
+    displayedPrice = targetPrice;
   }
+
+  // smooth movement
+  let step = (targetPrice - displayedPrice) * 0.1;
+
+  displayedPrice += step;
 
   series.update({
     time: now,
-    value: price
+    value: displayedPrice
   });
 
-  lastPrice = price;
 }
 
 // AUTO REFRESH
@@ -460,6 +465,12 @@ setInterval(()=>{
 if(user) loadData();
 },60000);
 
+// 🎯 smooth animation every 1s
+setInterval(() => {
+  if(displayedPrice > 0){
+    updateChart(displayedPrice);
+  }
+}, 1000);
 
 // RESIZE
 window.addEventListener("resize", () => {
