@@ -171,6 +171,25 @@ usdtLiquidity = Number(
 document.getElementById("usdtLiquidity").innerText =
   usdtLiquidity.toFixed(2);
 // =================================================
+
+// ================= POL LIQUIDITY =================
+let contractPOL = await ico.getContractPOLBalance();
+contractPOL = Number(ethers.utils.formatEther(contractPOL));
+
+document.getElementById("polLiquidity").innerText =
+  contractPOL.toFixed(4);
+
+
+// ================= TRC LIQUIDITY =================
+// IMPORTANT: direct TRC contract (no ico.token)
+let trcContract = new ethers.Contract(TRC, erc20ABI, signer);
+
+let trcLiquidity = await trcContract.balanceOf(ICO);
+trcLiquidity = Number(ethers.utils.formatUnits(trcLiquidity, 18));
+
+document.getElementById("trcLiquidity").innerText =
+  trcLiquidity.toFixed(4);
+
   
 }
 
