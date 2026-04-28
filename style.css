@@ -269,84 +269,105 @@ box-sizing:border-box;
 
 
 
-
 /* =========================
    BASE
 ========================= */
+
 body{
-  background: radial-gradient(circle at top, #0f0f0f, #050505);
-  color:white;
-  font-family:Arial, sans-serif;
+  background: radial-gradient(circle at top, #0a0a12, #000);
+  color:#e5e7eb;
+  font-family: Arial, sans-serif;
   margin:0;
+}
+
+/* smooth feel */
+*{
+  box-sizing:border-box;
+  transition: all 0.25s ease;
 }
 
 /* =========================
    HEADER
 ========================= */
+
 header{
   display:flex;
   flex-wrap:wrap;
   justify-content:space-between;
   align-items:center;
-  padding:14px 16px;
-  background:#0b0b0b;
-  border-bottom:1px solid rgba(255,255,255,0.05);
+  padding:12px;
+  background: rgba(20,20,30,0.7);
+  backdrop-filter: blur(10px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  gap:8px;
 }
 
 header h2{
   margin:0;
   font-size:18px;
-  color:#fff;
-  letter-spacing:0.5px;
+  color:#a78bfa;
+  text-shadow:0 0 10px rgba(167,139,250,0.4);
 }
 
 #walletAddress{
   font-size:12px;
-  opacity:0.7;
   word-break:break-all;
+  color:#cbd5e1;
 }
 
 /* =========================
-   STATS GRID
+   STATS
 ========================= */
+
 .stats{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(5,1fr);
   gap:10px;
-  padding:12px;
+  padding:10px;
 }
 
-.box{
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.06);
-  padding:12px;
+.stats .box{
+  background: rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  border-radius:12px;
+  padding:10px;
   text-align:center;
-  border-radius:10px;
   font-size:13px;
-  transition:0.3s;
+  color:#e5e7eb;
+  box-shadow:0 0 10px rgba(0,0,0,0.3);
 }
 
-.box:hover{
-  transform:translateY(-2px);
-  border-color:rgba(59,130,246,0.4);
+.stats .box div{
+  color:#facc15;
+  font-weight:bold;
+}
+
+/* hover glow */
+.stats .box:hover{
+  transform: translateY(-3px);
+  box-shadow:0 0 20px rgba(167,139,250,0.25);
 }
 
 /* =========================
-   MAIN LAYOUT
+   MAIN LAYOUT (IMPORTANT FIX)
 ========================= */
+
 .main{
   display:flex;
-  gap:16px;
-  padding:12px;
+  gap:20px;
+  padding:10px;
+  align-items:flex-start;
 }
 
 /* =========================
    CHART
 ========================= */
+
 .chartBox{
   flex:2;
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
   border-radius:14px;
   padding:10px;
   box-shadow:0 0 20px rgba(0,0,0,0.4);
@@ -358,170 +379,141 @@ header h2{
 }
 
 /* =========================
-   TRADE PANEL BASE
+   TRADE BOX
 ========================= */
+
 .tradeBox{
   flex:1;
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.05);
-  padding:14px;
+  background: rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
   border-radius:14px;
-  box-shadow:0 0 25px rgba(0,0,0,0.5);
+  padding:15px;
+  box-shadow:0 0 25px rgba(0,0,0,0.4);
+}
+
+.tradeBox h3,
+.tradeBox h4,
+.tradeBox p{
+  color:#e5e7eb;
 }
 
 /* section divider */
-.tradeBox h3, .tradeBox h4{
-  margin:10px 0 6px;
+.tradeBox hr{
+  border:none;
+  height:1px;
+  background:linear-gradient(to right, transparent, #22c55e, transparent);
+  margin:15px 0;
 }
 
 /* =========================
    INPUTS
 ========================= */
+
 input{
   width:100%;
   padding:12px;
-  margin-top:8px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.08);
+  margin-top:10px;
+  background: rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.1);
   color:white;
-  border-radius:10px;
-  font-size:14px;
-  transition:0.3s;
+  border-radius:8px;
+  font-size:15px;
 }
 
 input:focus{
   outline:none;
-  border-color:#3b82f6;
-  box-shadow:0 0 10px rgba(59,130,246,0.3);
+  border-color:#60a5fa;
+  box-shadow:0 0 10px rgba(96,165,250,0.3);
 }
 
 /* =========================
-   BUTTONS BASE
+   BUTTONS
 ========================= */
+
 button{
   width:100%;
   padding:12px;
   margin-top:10px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
   border:none;
   color:white;
   border-radius:10px;
-  font-size:14px;
+  font-size:15px;
   cursor:pointer;
-  transition:0.25s;
-  position:relative;
-  overflow:hidden;
-}
-
-/* shimmer */
-button::after{
-  content:"";
-  position:absolute;
-  top:0;
-  left:-100%;
-  width:100%;
-  height:100%;
-  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.25),transparent);
-  transition:0.5s;
-}
-
-button:hover::after{
-  left:100%;
-}
-
-/* =========================
-   🟣 TRC SECTION STYLE
-========================= */
-.tradeBox h3:nth-of-type(1),
-.tradeBox h3:nth-of-type(2){
-  color:#c084fc;
-}
-
-button{
-  background:linear-gradient(135deg,#3b82f6,#2563eb);
+  font-weight:bold;
+  box-shadow:0 0 10px rgba(59,130,246,0.3);
 }
 
 button:hover{
-  transform:scale(1.02);
-  box-shadow:0 0 15px rgba(59,130,246,0.4);
-}
-
-/* =========================
-   🟢 USDT SECTION STYLE
-========================= */
-.tradeBox hr{
-  border:0;
-  height:1px;
-  background:rgba(255,255,255,0.08);
-  margin:16px 0;
-}
-
-.tradeBox h3:nth-of-type(3){
-  color:#22c55e;
-}
-
-.tradeBox h4{
-  color:#16a34a;
-}
-
-/* USDT buttons green override */
-.tradeBox button:nth-of-type(4),
-.tradeBox button:nth-of-type(5),
-.tradeBox button:nth-of-type(6){
-  background:linear-gradient(135deg,#22c55e,#15803d);
-}
-
-.tradeBox button:nth-of-type(4):hover,
-.tradeBox button:nth-of-type(5):hover,
-.tradeBox button:nth-of-type(6):hover{
-  box-shadow:0 0 15px rgba(34,197,94,0.4);
+  transform: translateY(-2px);
+  box-shadow:0 0 18px rgba(59,130,246,0.6);
 }
 
 /* =========================
    COOLDOWN + STATUS
 ========================= */
+
 .cooldown{
   margin-top:12px;
-  color:#facc15;
-  font-size:13px;
+  color:#fbbf24;
+  font-weight:bold;
+  font-size:14px;
 }
 
 #status{
-  margin-top:10px;
-  font-size:13px;
+  margin-top:12px;
   color:#4ade80;
+  font-weight:bold;
 }
 
 /* =========================
-   MOBILE RESPONSIVE
+   MOBILE FIX (CRITICAL)
 ========================= */
+
 @media (max-width:900px){
-  .main{
-    flex-direction:column;
-  }
 
-  .stats{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  #chart{
-    height:300px;
-  }
+.main{
+  flex-direction:column;
 }
 
+.chartBox{
+  order:1;
+  width:100%;
+  margin-bottom:10px;
+}
+
+.tradeBox{
+  order:2;
+  width:100%;
+}
+
+/* chart never breaks */
+#chart{
+  height:260px !important;
+  width:100% !important;
+}
+}
+
+/* extra small screens */
 @media (max-width:500px){
-  header{
-    flex-direction:column;
-    align-items:flex-start;
-    gap:8px;
-  }
 
-  #chart{
-    height:260px;
-  }
+.stats{
+  grid-template-columns:repeat(2,1fr);
+}
 
-  button{
-    font-size:13px;
-  }
+header{
+  flex-direction:column;
+  align-items:flex-start;
+}
+
+button{
+  font-size:14px;
+  padding:11px;
+}
+
+input{
+  font-size:14px;
+}
 }
 
 
