@@ -471,15 +471,18 @@ setInterval(()=>{
 
   let diff = targetPrice - displayedPrice;
 
-  // snap when close
   if(Math.abs(diff) < 0.0001){
 
     displayedPrice = targetPrice;
 
   }else{
 
-    // smooth move
-    displayedPrice += diff * 0.15;
+    // connect wallet fast jump 0 -> live price
+    if(displayedPrice < targetPrice * 0.98){
+      displayedPrice += diff * 0.80;
+    }else{
+      displayedPrice += diff * 0.15;
+    }
 
   }
 
