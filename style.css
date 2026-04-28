@@ -368,6 +368,41 @@ input:focus{
 
 
 
+/* =========================
+   PREMIUM SECTION DIVIDER
+   (replaces <hr>)
+========================= */
+
+.tradeBox hr{
+  border: none;
+  height: 1px;
+  margin: 25px 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(168, 85, 247, 0.6),   /* purple glow */
+    rgba(250, 204, 21, 0.6),   /* gold glow */
+    transparent
+  );
+  position: relative;
+  overflow: visible;
+}
+
+/* glowing center dot */
+.tradeBox hr::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -3px;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #facc15, #a855f7);
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.6);
+}
+
+
 
 
 
