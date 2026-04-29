@@ -173,17 +173,6 @@ document.getElementById("usdtLiquidity").innerText =
   usdtLiquidity.toFixed(2);
 // =================================================
 
-// ================= TRC LIQUIDITY =================
-let trcLiquidity = await trc.balanceOf(ICO);
-
-trcLiquidity = Number(
-  ethers.utils.formatUnits(trcLiquidity, 18)
-);
-
-document.getElementById("trcLiquidity").innerText =
-  trcLiquidity.toFixed(4);
-
-
 // ================= POL LIQUIDITY =================
 let polLiquidity = await ico.getContractPOLBalance();
 
@@ -194,16 +183,24 @@ polLiquidity = Number(
 document.getElementById("polLiquidity").innerText =
   polLiquidity.toFixed(4);
 
-// ================= REAL USDT BALANCE =================
-let usdtContractBal = await usdt.balanceOf(ICO);
-
-usdtContractBal = Number(
-  ethers.utils.formatUnits(usdtContractBal, USDT_DECIMALS)
+// ===== REAL USDT BALANCE =====
+let usdtBalance = await ico.getUSDTBalance();
+usdtBalance = Number(
+  ethers.utils.formatUnits(usdtBalance, USDT_DECIMALS)
 );
 
-document.getElementById("usdtContractBalance").innerText =
-  usdtContractBal.toFixed(2);
-// ====================================================
+document.getElementById("usdtBalanceContract").innerText =
+  usdtBalance.toFixed(2);
+
+
+// ===== TRC BALANCE IN CONTRACT =====
+let trcBalance = await ico.getTRCBalance();
+trcBalance = Number(
+  ethers.utils.formatUnits(trcBalance, 18)
+);
+
+document.getElementById("trcBalanceContract").innerText =
+  trcBalance.toFixed(4);
   
 }
 
