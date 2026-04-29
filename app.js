@@ -16,6 +16,8 @@ const icoABI = [
 "function sellForUSDT(uint256)",
 "function getUSDTLiquidity() view returns(uint256)",
 "function getContractPOLBalance() view returns(uint256)",
+"function getUSDTBalance() view returns(uint256)",
+"function getTRCBalance() view returns(uint256)",
 "event PriceUpdated(uint256 price)"
 ];
 
