@@ -193,6 +193,17 @@ polLiquidity = Number(
 
 document.getElementById("polLiquidity").innerText =
   polLiquidity.toFixed(4);
+
+// ================= REAL USDT BALANCE =================
+let usdtContractBal = await usdt.balanceOf(ICO);
+
+usdtContractBal = Number(
+  ethers.utils.formatUnits(usdtContractBal, USDT_DECIMALS)
+);
+
+document.getElementById("usdtContractBalance").innerText =
+  usdtContractBal.toFixed(2);
+// ====================================================
   
 }
 
