@@ -141,9 +141,12 @@ Next Sell: <span id="cooldown">Loading...</span>
      SIP CALCULATOR START
 ========================= -->
 
+<!-- =========================
+     SIP CALCULATOR START
+========================= -->
 <section class="sip-section">
 
-  <h2>💰 TRC SIP Calculator</h2>
+  <h2>💰 TRC SIP Exit Calculator</h2>
 
   <div class="sip-box">
 
@@ -152,58 +155,50 @@ Next Sell: <span id="cooldown">Loading...</span>
     <input type="number" id="sipTarget" placeholder="Target Price ($)">
     <input type="number" id="sipCustomPrice" placeholder="Optional: Custom TRC Price ($)">
 
-    <p style="color: gold; font-size: 12px;">
-      Optional: Enter your own price for future simulation
-    </p>
-
     <button onclick="calculateSIP()">Calculate</button>
 
+    <!-- BASIC RESULTS -->
     <div class="sip-results">
-
-      <div class="sip-card"><span>Current Price</span><span id="sipCurrentPrice">-</span></div>
       <div class="sip-card"><span>Total Invested</span><span id="sipTotalInvested">-</span></div>
       <div class="sip-card"><span>Total TRC</span><span id="sipTotalTRC">-</span></div>
-
-      <div class="sip-card"><span>Gross Value</span><span id="sipGrossValue">-</span></div>
       <div class="sip-card"><span>Net Value</span><span id="sipNetValue">-</span></div>
       <div class="sip-card"><span>Profit</span><span id="sipProfit">-</span></div>
-      <div class="sip-card"><span>ROI</span><span id="sipROI">-</span></div>
+    </div>
 
-      <div class="sip-card"><span>Daily Sell</span><span id="sipDailySell">-</span></div>
-      <div class="sip-card"><span>Daily Income</span><span id="sipDailyIncome">-</span></div>
+    <!-- EXIT DAYS -->
+    <div class="sip-highlight">
+      ⏳ Full Exit Time: <span id="sipExitDaysFull">0</span>
+    </div>
 
-      <!-- EXIT INFO -->
-      <div class="sip-highlight">
-        Exit Days: <span id="sipExitDaysFull">0</span><br>
-        <span id="sipPhaseMsg"></span>
-      </div>
+    <!-- TABLE -->
+    <div class="sip-table-box">
+      <table class="sip-table">
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th>Balance</th>
+            <th>Sold</th>
+            <th>Remaining</th>
+            <th>Income</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody id="sipDailyTable"></tbody>
+      </table>
+    </div>
 
-      <!-- TABLE -->
-      <div class="sip-table-box">
-        <table class="sip-table">
-          <thead>
-            <tr>
-              <th>Day</th>
-              <th>TRC Sold</th>
-              <th>Income</th>
-              <th>Net Profit</th>
-            </tr>
-          </thead>
-          <tbody id="sipDailyTable"></tbody>
-        </table>
-      </div>
-
-      <!-- EXTRA -->
-      <div class="sip-highlight">
-        <div>Daily Capital: <span id="sipDailyCapital">-</span></div>
-        <div>🔥 Net Profit: <span id="sipDailyRealProfit">-</span></div>
-      </div>
-
+    <!-- FINAL RESULT -->
+    <div class="sip-highlight">
+      💰 Total Received: <span id="sipTotalReceived">0</span><br>
+      🚀 Net Profit: <span id="sipFinalProfit">0</span>
     </div>
 
   </div>
 
 </section>
+<!-- =========================
+     SIP CALCULATOR END
+========================= -->
 <!-- =========================
      SIP CALCULATOR END
 ========================= -->
