@@ -763,6 +763,67 @@ if (customPriceInput && customPriceInput > 0) {
     document.getElementById("sipDailyRealProfit").innerText =
       "$" + dailyNetProfitReal.toFixed(2);
 
+    // ==============================
+// REAL EXIT SIMULATION
+// ==============================
+
+let remainingTRC = totalTRC;
+let day = 0;
+
+let tableHTML = "";
+let phaseSwitchDay = null;
+
+// realistic capital split
+let estimatedDays = 300;
+let dailyCapital = totalInvestment / estimatedDays;
+
+while (remainingTRC > 0.00001 && day < 1000) {
+
+  let sellTRC;
+
+  if (remainingTRC >= 1) {
+    sellTRC = remainingTRC * 0.01;
+  } else {
+    sellTRC = 0.01;
+
+    if (!phaseSwitchDay) {
+      phaseSwitchDay = day + 1;
+    }
+  }
+
+  if (sellTRC > remainingTRC) {
+    sellTRC = remainingTRC;
+  }
+
+  let netUSD = sellTRC * targetPrice * 0.90;
+  let realProfit = netUSD - dailyCapital;
+
+  tableHTML += `
+    <tr>
+      <td>${day + 1}</td>
+      <td>${sellTRC.toFixed(4)}</td>
+      <td>$${netUSD.toFixed(2)}</td>
+      <td style="color:${realProfit > 0 ? '#00ff88' : 'red'}">
+        $${realProfit.toFixed(2)}
+      </td>
+    </tr>
+  `;
+
+  remainingTRC -= sellTRC;
+  day++;
+}
+
+// DISPLAY
+document.getElementById("sipDailyTable").innerHTML = tableHTML;
+
+document.getElementById("sipExitDaysFull").innerText =
+  day + " Days";
+
+document.getElementById("sipPhaseMsg").innerText =
+  phaseSwitchDay
+    ? "Below 1 TRC starts at Day " + phaseSwitchDay
+    : "";
+
   } catch (error) {
     console.error(error);
     alert("Calculation failed.");
