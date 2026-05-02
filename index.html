@@ -177,6 +177,28 @@ Next Sell: <span id="cooldown">Loading...</span>
       <div class="sip-card"><span>Daily Sell</span><span id="sipDailySell">-</span></div>
       <div class="sip-card"><span>Daily Income</span><span id="sipDailyIncome">-</span></div>
       <div class="sip-card"><span>Exit Days</span><span id="sipExitDays">-</span></div>
+      <!-- =========================
+     REAL EXIT TABLE
+========================= -->
+
+<div class="sip-highlight">
+  Full Exit Time: <span id="sipExitDaysFull">0</span>
+</div>
+
+<div style="overflow-x:auto; margin-top:10px;">
+  <table class="sip-table">
+    <thead>
+      <tr>
+        <th>Day</th>
+        <th>Balance</th>
+        <th>Sold (1%)</th>
+        <th>Remaining</th>
+        <th>Net ($)</th>
+      </tr>
+    </thead>
+    <tbody id="sipExitTable"></tbody>
+  </table>
+</div>
 
       <!-- EXTRA -->
       <div class="sip-highlight">
