@@ -170,8 +170,6 @@ let usdtLiquidity = await ico.getUSDTLiquidity();
 usdtLiquidity = Number(
   ethers.utils.formatUnits(usdtLiquidity, USDT_DECIMALS)
 );
-
-
   
 document.getElementById("usdtLiquidity").innerText =
   usdtLiquidity.toFixed(2);
