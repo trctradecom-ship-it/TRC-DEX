@@ -766,6 +766,53 @@ if (customPriceInput && customPriceInput > 0) {
     document.getElementById("sipDailyRealProfit").innerText =
       "$" + dailyNetProfitReal.toFixed(2);
 
+
+    // ==============================
+// REAL 1% BALANCE EXIT TABLE
+// ==============================
+
+let balance = totalTRC;
+let day = 0;
+let tableHTML = "";
+
+while (balance > 0.00001 && day < 1000) {
+
+  // 1% of CURRENT balance
+  let sellTRC = balance * 0.01;
+
+  // If balance < 1 TRC → fixed 0.01
+  if (balance < 1) {
+    sellTRC = 0.01;
+  }
+
+  // Safety
+  if (sellTRC > balance) {
+    sellTRC = balance;
+  }
+
+  let remaining = balance - sellTRC;
+
+  // Net after 10% tax
+  let netUSD = sellTRC * targetPrice * 0.90;
+
+  tableHTML += `
+    <tr>
+      <td>${day + 1}</td>
+      <td>${balance.toFixed(4)}</td>
+      <td>${sellTRC.toFixed(4)}</td>
+      <td>${remaining.toFixed(4)}</td>
+      <td>$${netUSD.toFixed(2)}</td>
+    </tr>
+  `;
+
+  balance = remaining;
+  day++;
+}
+
+// show table
+document.getElementById("sipExitTable").innerHTML = tableHTML;
+document.getElementById("sipExitDaysFull").innerText = day + " Days";
+
   } catch (error) {
     console.error(error);
     alert("Calculation failed.");
