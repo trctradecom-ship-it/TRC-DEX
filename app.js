@@ -613,3 +613,150 @@ window.addEventListener("resize", () => {
   );
 
 });
+
+
+
+
+
+
+
+
+
+
+
+// ======================================================
+// SIP CALCULATOR
+// ======================================================
+
+async function calculateSIP() {
+  try {
+    if (!ico) {
+      alert("Please connect wallet first.");
+      return;
+    }
+
+    // ==============================
+    // USER INPUTS
+    // ==============================
+    const days = parseInt(document.getElementById("sipDays").value);
+    const dailyInvestment = parseFloat(document.getElementById("sipDaily").value);
+    const targetPrice = parseFloat(document.getElementById("sipTarget").value);
+
+    if (!days || days < 1 || days > 365) {
+      alert("Investment period must be between 1 and 365 days.");
+      return;
+    }
+
+    if (!dailyInvestment || dailyInvestment <= 0) {
+      alert("Enter valid daily investment.");
+      return;
+    }
+
+    if (!targetPrice || targetPrice <= 0) {
+      alert("Enter valid target price.");
+      return;
+    }
+
+    // ==============================
+    // FETCH LIVE TRC PRICE
+    // ==============================
+    let currentPrice = await ico.usdPrice();
+    currentPrice = Number(
+      ethers.utils.formatUnits(currentPrice, 18)
+    );
+
+    // ==============================
+    // BUY TAX (5%)
+    // ==============================
+    const effectiveInvestment = dailyInvestment * 0.95;
+
+    // TRC received daily
+    const dailyTRC = effectiveInvestment / currentPrice;
+
+    // Total accumulation
+    const totalTRC = dailyTRC * days;
+
+    // Total invested
+    const totalInvestment = dailyInvestment * days;
+
+    // ==============================
+    // SELL VALUE
+    // ==============================
+    const grossValue = totalTRC * targetPrice;
+
+    // Total effective sell tax = 15%
+    const netValue = grossValue * 0.85;
+
+    // Profit
+    const netProfit = netValue - totalInvestment;
+
+    const roi = (netProfit / totalInvestment) * 100;
+
+    // ==============================
+    // DAILY 1% SELL MODEL
+    // ==============================
+    const dailySellTRC = totalTRC * 0.01;
+    const dailyGrossSell = dailySellTRC * targetPrice;
+    const dailyNetSell = dailyGrossSell * 0.85;
+
+    const fullExitDays = 100;
+
+    // ==============================
+    // EXTRA: DAILY PROFIT BREAKDOWN
+    // ==============================
+    // Capital returned per day
+    const dailyCapitalReturn = totalInvestment / fullExitDays;
+
+    // Real profit after removing capital portion
+    const dailyNetProfitReal = dailyNetSell - dailyCapitalReturn;
+
+    // ==============================
+    // DISPLAY RESULTS
+    // ==============================
+    document.getElementById("sipCurrentPrice").innerText =
+      "$" + currentPrice.toFixed(2);
+
+    document.getElementById("sipTotalInvested").innerText =
+      "$" + totalInvestment.toFixed(2);
+
+    document.getElementById("sipTotalTRC").innerText =
+      totalTRC.toFixed(6) + " TRC";
+
+    document.getElementById("sipGrossValue").innerText =
+      "$" + grossValue.toFixed(2);
+
+    document.getElementById("sipNetValue").innerText =
+      "$" + netValue.toFixed(2);
+
+    document.getElementById("sipProfit").innerText =
+      "$" + netProfit.toFixed(2);
+
+    document.getElementById("sipROI").innerText =
+      roi.toFixed(2) + "%";
+
+    document.getElementById("sipDailySell").innerText =
+      dailySellTRC.toFixed(6) + " TRC";
+
+    document.getElementById("sipDailyIncome").innerText =
+      "$" + dailyNetSell.toFixed(2);
+
+    document.getElementById("sipExitDays").innerText =
+      fullExitDays + " Days";
+
+    // ==============================
+    // EXTRA DISPLAY (NEW SECTION)
+    // ==============================
+    document.getElementById("sipDailyCapital").innerText =
+      "$" + dailyCapitalReturn.toFixed(2);
+
+    document.getElementById("sipDailyRealProfit").innerText =
+      "$" + dailyNetProfitReal.toFixed(2);
+
+  } catch (error) {
+    console.error(error);
+    alert("Calculation failed.");
+  }
+}
+
+
+
