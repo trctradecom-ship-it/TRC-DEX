@@ -628,6 +628,9 @@ window.addEventListener("resize", () => {
 // SIP CALCULATOR (CLEAN + FIXED)
 // ======================================================
 // ======================================================
+// SIP CALCULATOR (CLEAN + FIXED)
+// ======================================================
+// ======================================================
 // SIP CALCULATOR
 // ======================================================
 
@@ -748,7 +751,14 @@ if (customPriceInput && customPriceInput > 0) {
     document.getElementById("sipROI").innerText =
       roi.toFixed(2) + "%";
 
-    
+    document.getElementById("sipDailySell").innerText =
+      dailySellTRC.toFixed(6) + " TRC";
+
+    document.getElementById("sipDailyIncome").innerText =
+      "$" + dailyNetSell.toFixed(2);
+
+    document.getElementById("sipExitDays").innerText =
+      fullExitDays + " Days";
 
     // ==============================
     // EXTRA DISPLAY (NEW SECTION)
