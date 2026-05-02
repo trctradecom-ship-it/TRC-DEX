@@ -658,12 +658,23 @@ async function calculateSIP() {
     }
 
     // ==============================
-    // FETCH LIVE TRC PRICE
-    // ==============================
-    let currentPrice = await ico.usdPrice();
-    currentPrice = Number(
-      ethers.utils.formatUnits(currentPrice, 18)
-    );
+// PRICE SOURCE (LIVE OR CUSTOM)
+// ==============================
+
+let customPriceInput = parseFloat(document.getElementById("sipCustomPrice").value);
+
+let currentPrice;
+
+if (customPriceInput && customPriceInput > 0) {
+  // ✅ Use user-entered price
+  currentPrice = customPriceInput;
+} else {
+  // ✅ Use live contract price
+  let livePrice = await ico.usdPrice();
+  currentPrice = Number(
+    ethers.utils.formatUnits(livePrice, 18)
+  );
+}
 
     // ==============================
     // BUY TAX (5%)
