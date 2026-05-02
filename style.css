@@ -840,3 +840,82 @@ input:focus{
     font-size: 14px;
   }
 }
+
+
+
+
+
+
+
+
+
+/* =========================
+   EXIT TABLE ONLY
+========================= */
+
+.sip-table-box {
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 12px;
+  background: #0b0b0b;
+  overflow-x: auto;
+}
+
+/* TABLE */
+.sip-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 480px;
+}
+
+/* HEADER */
+.sip-table th {
+  background: linear-gradient(45deg, #ffd700, #ffb300);
+  color: #000;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* BODY */
+.sip-table td {
+  padding: 8px;
+  font-size: 12px;
+  color: #eee;
+  text-align: center;
+  border-bottom: 1px solid #222;
+}
+
+/* ROW EFFECT */
+.sip-table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.sip-table tr:hover {
+  background: rgba(255, 215, 0, 0.08);
+}
+
+/* PROFIT COLORS */
+.profit-positive {
+  color: #00ff88;
+  font-weight: bold;
+}
+
+.profit-negative {
+  color: #ff4d4d;
+  font-weight: bold;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .sip-table th {
+    font-size: 11px;
+    padding: 8px;
+  }
+
+  .sip-table td {
+    font-size: 10px;
+    padding: 6px;
+  }
+}
