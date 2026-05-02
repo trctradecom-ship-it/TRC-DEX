@@ -919,3 +919,62 @@ input:focus{
     padding: 6px;
   }
 }
+
+
+
+
+
+
+
+
+
+/* TABLE CONTAINER (FIXED HEIGHT + SCROLL) */
+.table-container {
+  max-height: 400px;   /* controls height */
+  overflow-y: auto;
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid #333;
+}
+
+/* TABLE STYLE */
+.sip-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 500px;
+}
+
+/* HEADER FIX (STICKY) */
+.sip-table thead th {
+  position: sticky;
+  top: 0;
+  background: linear-gradient(90deg, #ffcc00, #ff9900);
+  color: black;
+  z-index: 2;
+}
+
+/* CELLS */
+.sip-table th,
+.sip-table td {
+  padding: 10px;
+  text-align: center;
+  font-size: 13px;
+}
+
+/* ROW STYLE */
+.sip-table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* MOBILE FIX */
+@media (max-width: 600px) {
+  .table-container {
+    max-height: 300px;
+  }
+
+  .sip-table th,
+  .sip-table td {
+    font-size: 11px;
+    padding: 6px;
+  }
+}
