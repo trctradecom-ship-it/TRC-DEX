@@ -136,6 +136,56 @@ Next Sell: <span id="cooldown">Loading...</span>
 
 </div>
 
+
+<!-- =========================
+     SIP CALCULATOR START
+========================= -->
+
+<section class="sip-section">
+
+  <h2>💰 TRC SIP Calculator</h2>
+
+  <div class="sip-box">
+
+    <input type="number" id="sipDays" placeholder="Days (1–365)">
+    <input type="number" id="sipDaily" placeholder="Daily Investment ($)">
+    <input type="number" id="sipTarget" placeholder="Target Price ($)">
+
+    <button onclick="calculateSIP()">Calculate</button>
+
+    <div class="sip-results">
+
+      <div class="sip-card"><span>Current Price</span><span id="sipCurrentPrice">-</span></div>
+      <div class="sip-card"><span>Total Invested</span><span id="sipTotalInvested">-</span></div>
+      <div class="sip-card"><span>Total TRC</span><span id="sipTotalTRC">-</span></div>
+
+      <div class="sip-card"><span>Gross Value</span><span id="sipGrossValue">-</span></div>
+      <div class="sip-card"><span>Net Value</span><span id="sipNetValue">-</span></div>
+      <div class="sip-card"><span>Profit</span><span id="sipProfit">-</span></div>
+      <div class="sip-card"><span>ROI</span><span id="sipROI">-</span></div>
+
+      <div class="sip-card"><span>Daily Sell</span><span id="sipDailySell">-</span></div>
+      <div class="sip-card"><span>Daily Income</span><span id="sipDailyIncome">-</span></div>
+      <div class="sip-card"><span>Exit Days</span><span id="sipExitDays">-</span></div>
+
+      <!-- EXTRA -->
+      <div class="sip-highlight">
+        <div><span>Daily Capital</span><span id="sipDailyCapital">-</span></div>
+        <div><span>🔥 Daily Net Profit</span><span id="sipDailyRealProfit">-</span></div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================
+     SIP CALCULATOR END
+========================= -->
+
+
+  
 <!-- =========================
      FAQ SECTION START
 ========================= -->
