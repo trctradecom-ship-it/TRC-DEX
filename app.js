@@ -171,7 +171,7 @@ usdtLiquidity = Number(
   ethers.utils.formatUnits(usdtLiquidity, USDT_DECIMALS)
 );
 
-if (usdtLiquidity === 0) return;  
+
   
 document.getElementById("usdtLiquidity").innerText =
   usdtLiquidity.toFixed(2);
