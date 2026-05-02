@@ -685,7 +685,7 @@ async function calculateSIP() {
     const grossValue = totalTRC * targetPrice;
 
     // Total effective sell tax = 15%
-    const netValue = grossValue * 0.85;
+    const netValue = grossValue * 0.90;
 
     // Profit
     const netProfit = netValue - totalInvestment;
@@ -697,7 +697,7 @@ async function calculateSIP() {
     // ==============================
     const dailySellTRC = totalTRC * 0.01;
     const dailyGrossSell = dailySellTRC * targetPrice;
-    const dailyNetSell = dailyGrossSell * 0.85;
+    const dailyNetSell = dailyGrossSell * 0.90;
 
     const fullExitDays = 100;
 
