@@ -150,11 +150,10 @@ Next Sell: <span id="cooldown">Loading...</span>
     <input type="number" id="sipDays" placeholder="Days (1–365)">
     <input type="number" id="sipDaily" placeholder="Daily Investment ($)">
     <input type="number" id="sipTarget" placeholder="Target Price ($)">
-    <!-- OPTIONAL CUSTOM PRICE -->
     <input type="number" id="sipCustomPrice" placeholder="Optional: Custom TRC Price ($)">
 
-    <p style="color: gold; font-size: 12px; margin-top:5px;">
-    Optional: Enter your own price for future simulation
+    <p style="color: gold; font-size: 12px;">
+      Optional: Enter your own price for future simulation
     </p>
 
     <button onclick="calculateSIP()">Calculate</button>
@@ -172,33 +171,32 @@ Next Sell: <span id="cooldown">Loading...</span>
 
       <div class="sip-card"><span>Daily Sell</span><span id="sipDailySell">-</span></div>
       <div class="sip-card"><span>Daily Income</span><span id="sipDailyIncome">-</span></div>
-      <!-- =========================
-     FULL EXIT SECTION
-========================= -->
 
-<div class="sip-highlight">
-  Exit Days: <span id="sipExitDaysFull">0</span><br>
-  <span id="sipPhaseMsg"></span>
-</div>
+      <!-- EXIT INFO -->
+      <div class="sip-highlight">
+        Exit Days: <span id="sipExitDaysFull">0</span><br>
+        <span id="sipPhaseMsg"></span>
+      </div>
 
-<div class="sip-table-box">
-  <table class="sip-table">
-    <thead>
-      <tr>
-        <th>Day</th>
-        <th>TRC Sold</th>
-        <th>Income</th>
-        <th>Net Profit</th>
-      </tr>
-    </thead>
-    <tbody id="sipDailyTable"></tbody>
-  </table>
-</div>
+      <!-- TABLE -->
+      <div class="sip-table-box">
+        <table class="sip-table">
+          <thead>
+            <tr>
+              <th>Day</th>
+              <th>TRC Sold</th>
+              <th>Income</th>
+              <th>Net Profit</th>
+            </tr>
+          </thead>
+          <tbody id="sipDailyTable"></tbody>
+        </table>
+      </div>
 
       <!-- EXTRA -->
       <div class="sip-highlight">
-        <div><span>Daily Actual Capital</span><span id="sipDailyCapital">-</span></div>
-        <div><span>🔥 Daily Net Profit</span><span id="sipDailyRealProfit">-</span></div>
+        <div>Daily Capital: <span id="sipDailyCapital">-</span></div>
+        <div>🔥 Net Profit: <span id="sipDailyRealProfit">-</span></div>
       </div>
 
     </div>
@@ -206,7 +204,6 @@ Next Sell: <span id="cooldown">Loading...</span>
   </div>
 
 </section>
-
 <!-- =========================
      SIP CALCULATOR END
 ========================= -->
