@@ -625,7 +625,7 @@ window.addEventListener("resize", () => {
 
 
 // ======================================================
-// SIP CALCULATOR
+// SIP CALCULATOR (CLEAN + FIXED)
 // ======================================================
 
 async function calculateSIP() {
@@ -658,175 +658,125 @@ async function calculateSIP() {
     }
 
     // ==============================
-// PRICE SOURCE (LIVE OR CUSTOM)
-// ==============================
+    // PRICE (LIVE OR CUSTOM)
+    // ==============================
+    const priceInputEl = document.getElementById("sipCustomPrice");
+    let customPrice = priceInputEl ? parseFloat(priceInputEl.value) : 0;
 
-let customPriceInput = parseFloat(document.getElementById("sipCustomPrice").value);
+    let currentPrice;
 
-let currentPrice;
-
-if (customPriceInput && customPriceInput > 0) {
-  // ✅ Use user-entered price
-  currentPrice = customPriceInput;
-} else {
-  // ✅ Use live contract price
-  let livePrice = await ico.usdPrice();
-  currentPrice = Number(
-    ethers.utils.formatUnits(livePrice, 18)
-  );
-}
+    if (customPrice && customPrice > 0) {
+      currentPrice = customPrice;
+    } else {
+      let livePrice = await ico.usdPrice();
+      currentPrice = Number(ethers.utils.formatUnits(livePrice, 18));
+    }
 
     // ==============================
-    // BUY TAX (5%)
+    // BUY (5% TAX)
     // ==============================
     const effectiveInvestment = dailyInvestment * 0.95;
-
-    // TRC received daily
     const dailyTRC = effectiveInvestment / currentPrice;
 
-    // Total accumulation
     const totalTRC = dailyTRC * days;
-
-    // Total invested
     const totalInvestment = dailyInvestment * days;
 
     // ==============================
-    // SELL VALUE
+    // FINAL VALUE (10% SELL TAX ONLY)
     // ==============================
     const grossValue = totalTRC * targetPrice;
-
-    // Total effective sell tax = 15%
     const netValue = grossValue * 0.90;
 
-    // Profit
     const netProfit = netValue - totalInvestment;
-
     const roi = (netProfit / totalInvestment) * 100;
 
     // ==============================
-    // DAILY 1% SELL MODEL
+    // DAILY SELL (INITIAL VIEW)
     // ==============================
     const dailySellTRC = totalTRC * 0.01;
-    const dailyGrossSell = dailySellTRC * targetPrice;
-    const dailyNetSell = dailyGrossSell * 0.90;
-
-    const fullExitDays = 100;
+    const dailyNetSell = dailySellTRC * targetPrice * 0.90;
 
     // ==============================
-    // EXTRA: DAILY PROFIT BREAKDOWN
+    // CAPITAL SPLIT (REALISTIC)
     // ==============================
-    // Capital returned per day
-    const dailyCapitalReturn = totalInvestment / fullExitDays;
-
-    // Real profit after removing capital portion
-    const dailyNetProfitReal = dailyNetSell - dailyCapitalReturn;
+    const estimatedDays = 300;
+    const dailyCapital = totalInvestment / estimatedDays;
+    const dailyProfit = dailyNetSell - dailyCapital;
 
     // ==============================
-    // DISPLAY RESULTS
+    // DISPLAY BASIC DATA
     // ==============================
-    document.getElementById("sipCurrentPrice").innerText =
-      "$" + currentPrice.toFixed(2);
+    document.getElementById("sipCurrentPrice").innerText = "$" + currentPrice.toFixed(2);
+    document.getElementById("sipTotalInvested").innerText = "$" + totalInvestment.toFixed(2);
+    document.getElementById("sipTotalTRC").innerText = totalTRC.toFixed(6) + " TRC";
 
-    document.getElementById("sipTotalInvested").innerText =
-      "$" + totalInvestment.toFixed(2);
+    document.getElementById("sipGrossValue").innerText = "$" + grossValue.toFixed(2);
+    document.getElementById("sipNetValue").innerText = "$" + netValue.toFixed(2);
+    document.getElementById("sipProfit").innerText = "$" + netProfit.toFixed(2);
+    document.getElementById("sipROI").innerText = roi.toFixed(2) + "%";
 
-    document.getElementById("sipTotalTRC").innerText =
-      totalTRC.toFixed(6) + " TRC";
+    document.getElementById("sipDailySell").innerText = dailySellTRC.toFixed(6) + " TRC";
+    document.getElementById("sipDailyIncome").innerText = "$" + dailyNetSell.toFixed(2);
 
-    document.getElementById("sipGrossValue").innerText =
-      "$" + grossValue.toFixed(2);
-
-    document.getElementById("sipNetValue").innerText =
-      "$" + netValue.toFixed(2);
-
-    document.getElementById("sipProfit").innerText =
-      "$" + netProfit.toFixed(2);
-
-    document.getElementById("sipROI").innerText =
-      roi.toFixed(2) + "%";
-
-    document.getElementById("sipDailySell").innerText =
-      dailySellTRC.toFixed(6) + " TRC";
-
-    document.getElementById("sipDailyIncome").innerText =
-      "$" + dailyNetSell.toFixed(2);
-
-    document.getElementById("sipExitDays").innerText =
-      fullExitDays + " Days";
+    document.getElementById("sipDailyCapital").innerText = "$" + dailyCapital.toFixed(2);
+    document.getElementById("sipDailyRealProfit").innerText = "$" + dailyProfit.toFixed(2);
 
     // ==============================
-    // EXTRA DISPLAY (NEW SECTION)
+    // EXIT SIMULATION (REAL LOGIC)
     // ==============================
-    document.getElementById("sipDailyCapital").innerText =
-      "$" + dailyCapitalReturn.toFixed(2);
+    const tableEl = document.getElementById("sipDailyTable");
+    const exitEl = document.getElementById("sipExitDaysFull");
+    const phaseEl = document.getElementById("sipPhaseMsg");
 
-    document.getElementById("sipDailyRealProfit").innerText =
-      "$" + dailyNetProfitReal.toFixed(2);
+    if (!tableEl || !exitEl || !phaseEl) return;
 
-    // ==============================
-// REAL EXIT SIMULATION
-// ==============================
+    let remainingTRC = totalTRC;
+    let day = 0;
+    let tableHTML = "";
+    let phaseSwitchDay = null;
 
-let remainingTRC = totalTRC;
-let day = 0;
+    while (remainingTRC > 0.00001 && day < 1000) {
 
-let tableHTML = "";
-let phaseSwitchDay = null;
+      let sellTRC = remainingTRC >= 1
+        ? remainingTRC * 0.01
+        : 0.01;
 
-// realistic capital split
-let estimatedDays = 300;
-let dailyCapital = totalInvestment / estimatedDays;
+      if (remainingTRC < 1 && !phaseSwitchDay) {
+        phaseSwitchDay = day + 1;
+      }
 
-while (remainingTRC > 0.00001 && day < 1000) {
+      if (sellTRC > remainingTRC) {
+        sellTRC = remainingTRC;
+      }
 
-  let sellTRC;
+      let netUSD = sellTRC * targetPrice * 0.90;
+      let realProfit = netUSD - dailyCapital;
 
-  if (remainingTRC >= 1) {
-    sellTRC = remainingTRC * 0.01;
-  } else {
-    sellTRC = 0.01;
+      tableHTML += `
+        <tr>
+          <td>${day + 1}</td>
+          <td>${sellTRC.toFixed(4)}</td>
+          <td>$${netUSD.toFixed(2)}</td>
+          <td style="color:${realProfit > 0 ? '#00ff88' : 'red'}">
+            $${realProfit.toFixed(2)}
+          </td>
+        </tr>
+      `;
 
-    if (!phaseSwitchDay) {
-      phaseSwitchDay = day + 1;
+      remainingTRC -= sellTRC;
+      day++;
     }
-  }
 
-  if (sellTRC > remainingTRC) {
-    sellTRC = remainingTRC;
-  }
+    tableEl.innerHTML = tableHTML;
+    exitEl.innerText = day + " Days";
 
-  let netUSD = sellTRC * targetPrice * 0.90;
-  let realProfit = netUSD - dailyCapital;
-
-  tableHTML += `
-    <tr>
-      <td>${day + 1}</td>
-      <td>${sellTRC.toFixed(4)}</td>
-      <td>$${netUSD.toFixed(2)}</td>
-      <td style="color:${realProfit > 0 ? '#00ff88' : 'red'}">
-        $${realProfit.toFixed(2)}
-      </td>
-    </tr>
-  `;
-
-  remainingTRC -= sellTRC;
-  day++;
-}
-
-// DISPLAY
-document.getElementById("sipDailyTable").innerHTML = tableHTML;
-
-document.getElementById("sipExitDaysFull").innerText =
-  day + " Days";
-
-document.getElementById("sipPhaseMsg").innerText =
-  phaseSwitchDay
-    ? "Below 1 TRC starts at Day " + phaseSwitchDay
-    : "";
+    phaseEl.innerText = phaseSwitchDay
+      ? "Below 1 TRC starts at Day " + phaseSwitchDay
+      : "";
 
   } catch (error) {
-    console.error(error);
-    alert("Calculation failed.");
+    console.error("SIP ERROR:", error);
+    alert(error.message);
   }
 }
 
