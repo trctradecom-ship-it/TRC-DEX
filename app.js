@@ -772,7 +772,7 @@ while (balance > 0.00001 && day < 1000) {
   // 1% of CURRENT balance
   let sellTRC = balance * 0.01;
 
-  // If balance < 1 TRC → fixed 0.01
+  // If balance < 20 TRC → fixed 0.2 TRC
   if (balance < 20) {
     sellTRC = 0.2;
   }
