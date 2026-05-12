@@ -683,9 +683,9 @@ if (customPriceInput && customPriceInput > 0) {
 }
 
     // ==============================
-    // BUY TAX (5%)
+    // BUY TAX (2.5%)
     // ==============================
-    const effectiveInvestment = dailyInvestment * 0.95;
+    const effectiveInvestment = dailyInvestment * 0.975;
 
     // TRC received daily
     const dailyTRC = effectiveInvestment / currentPrice;
@@ -701,7 +701,7 @@ if (customPriceInput && customPriceInput > 0) {
     // ==============================
     const grossValue = totalTRC * targetPrice;
 
-    // Total effective sell tax = 15%
+    // Total effective sell tax = 10%
     const netValue = grossValue * 0.90;
 
     // Profit
@@ -773,8 +773,8 @@ while (balance > 0.00001 && day < 1000) {
   let sellTRC = balance * 0.01;
 
   // If balance < 1 TRC → fixed 0.01
-  if (balance < 1) {
-    sellTRC = 0.01;
+  if (balance < 20) {
+    sellTRC = 0.2;
   }
 
   // Safety
