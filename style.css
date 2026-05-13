@@ -19,9 +19,9 @@ gap:8px;
 
 header h2{
     width: fit-content;
-    margin: 2px auto 8px auto;
+    margin: 2px auto 6px auto;
 
-    padding: 6px 16px;
+    padding: 4px 14px;
 
     display: block;
     text-align: center;
@@ -41,7 +41,7 @@ header h2{
     );
 
     border: 1px solid rgba(255,196,0,0.28);
-    border-radius: 12px;
+    border-radius: 10px;
 
     box-shadow:
         0 0 12px rgba(255,196,0,0.10),
