@@ -992,3 +992,209 @@ input:focus{
 
     
     
+/* =========================================
+   
+TRC SYSTEM / USER INFO PREMIUM UI
+   ONLY CSS — NO HTML CHANGES NEEDED
+
+========================================= */
+
+/* MAIN DARK BACKGROUND */
+
+body{
+    background:
+    radial-gradient(circle at top,
+    #04152f 0%,
+    #020816 45%,
+    #000000 100%) !important;
+}
+
+/* =========================================
+   SYSTEM / USER BUTTONS
+========================================= */
+
+/* TARGET FIRST 2 BUTTONS INSIDE TRADE AREA */
+
+.tradeBox button:nth-of-type(1),
+.tradeBox button:nth-of-type(2){
+
+    width:48% !important;
+    height:68px !important;
+
+    border:none !important;
+    border-radius:22px !important;
+
+    font-size:18px !important;
+    font-weight:600 !important;
+
+    color:#dce7ff !important;
+
+    background:
+    linear-gradient(145deg,
+    rgba(6,15,35,.96),
+    rgba(2,8,18,.96)) !important;
+
+    border:1px solid rgba(255,255,255,.04) !important;
+
+    box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.03),
+    0 8px 20px rgba(0,0,0,.35) !important;
+
+    margin-bottom:18px !important;
+
+    transition:.3s ease !important;
+}
+
+/* ACTIVE BUTTON */
+
+.tradeBox button.active{
+
+    color:#fff3c7 !important;
+
+    background:
+    linear-gradient(135deg,
+    #241300 0%,
+    #7b4d00 35%,
+    #ffbf1f 70%,
+    #603800 100%) !important;
+
+    border:1px solid rgba(255,220,120,.55) !important;
+
+    box-shadow:
+    0 0 12px rgba(255,190,40,.8),
+    0 0 28px rgba(255,190,40,.45),
+    inset 0 1px 1px rgba(255,255,255,.18) !important;
+}
+
+/* =========================================
+   ALL INFO BOXES
+========================================= */
+
+/* TARGET YOUR EXISTING .box */
+
+.box{
+
+    position:relative !important;
+
+    overflow:hidden !important;
+
+    border-radius:28px !important;
+
+    padding:22px !important;
+
+    min-height:110px !important;
+
+    background:
+    linear-gradient(135deg,
+    rgba(5,5,8,.98) 0%,
+    rgba(45,25,0,.96) 35%,
+    rgba(140,85,0,.90) 75%,
+    rgba(10,5,0,.98) 100%) !important;
+
+    border:1px solid rgba(255,190,40,.45) !important;
+
+    box-shadow:
+    0 0 14px rgba(255,180,40,.22),
+    0 0 40px rgba(255,180,40,.12),
+    inset 0 1px 1px rgba(255,255,255,.08) !important;
+
+    margin-bottom:18px !important;
+}
+
+/* GOLD LIGHT EFFECT */
+
+.box::before{
+
+    content:'' !important;
+
+    position:absolute !important;
+
+    top:-20% !important;
+    right:-10% !important;
+
+    width:75% !important;
+    height:180% !important;
+
+    background:
+    radial-gradient(circle,
+    rgba(255,220,120,.30) 0%,
+    rgba(255,220,120,.10) 35%,
+    transparent 70%) !important;
+
+    transform:rotate(-15deg);
+}
+
+/* TOP SHINE LINE */
+
+.box::after{
+
+    content:'' !important;
+
+    position:absolute !important;
+
+    top:0 !important;
+    left:15% !important;
+
+    width:70% !important;
+    height:2px !important;
+
+    background:
+    linear-gradient(to right,
+    transparent,
+    rgba(255,235,160,.95),
+    transparent) !important;
+
+    box-shadow:
+    0 0 12px rgba(255,220,100,.9) !important;
+}
+
+/* =========================================
+   BOX LABELS
+========================================= */
+
+.box{
+    font-size:19px !important;
+    font-weight:500 !important;
+    color:#ffd76a !important;
+    letter-spacing:.5px !important;
+}
+
+/* VALUES INSIDE BOX */
+
+.box div{
+
+    font-size:38px !important;
+    font-weight:700 !important;
+
+    color:#ffffff !important;
+
+    margin-top:10px !important;
+
+    text-shadow:
+    0 0 10px rgba(255,255,255,.12) !important;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:480px){
+
+.box{
+    min-height:98px !important;
+    padding:20px !important;
+    border-radius:24px !important;
+}
+
+.box div{
+    font-size:32px !important;
+}
+
+.tradeBox button:nth-of-type(1),
+.tradeBox button:nth-of-type(2){
+    height:62px !important;
+    font-size:17px !important;
+}
+
+}
+
