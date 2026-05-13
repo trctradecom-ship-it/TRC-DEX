@@ -989,16 +989,10 @@ input:focus{
 
 
 
-/* ===== TRC DEX TITLE ===== */
- /* ===== TRC DEX TITLE ===== */
 
+/* header fix */
 h2{
     position: relative;
-
-    /* PERFECT CENTER */
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
     width: fit-content;
     margin: 25px auto 35px auto;
@@ -1009,6 +1003,7 @@ h2{
     font-weight: 800;
     letter-spacing: 2px;
     text-transform: uppercase;
+    text-align: center;
 
     color: #ffd54a;
 
@@ -1029,8 +1024,6 @@ h2{
         inset 0 0 12px rgba(255,215,100,0.05);
 
     overflow: hidden;
-
-    text-align: center;
 }
 
 /* Golden glow line */
@@ -1082,19 +1075,3 @@ h2::after{
         left: 150%;
     }
 }
-
-/* EXTRA CENTER FIX */
-
-body{
-    text-align: center;
-}
-
-
-
-
-
-
-
-    
-    
-
