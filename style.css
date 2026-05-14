@@ -49,9 +49,24 @@ header h2{
 }
 
 #walletAddress{
-font-size:12px;
+font-size:10px;
 word-break:break-all;
 font-weight:bold;   
+
+color:rgba(255,255,255,0.7);
+
+background:rgba(0,0,0,0.3);
+backdrop-filter:blur(8px);
+-webkit-backdrop-filter:blur(8px);
+
+border:1px solid rgba(255,255,255,0.08);
+
+padding:6px 10px;
+border-radius:8px;
+
+box-shadow:
+0 4px 12px rgba(0,0,0,0.25),
+inset 0 1px 1px rgba(255,255,255,0.06);
 }
 
 /* STATS */
