@@ -784,7 +784,7 @@ while (balance > 0.00001 && day < 1000) {
 
   let remaining = balance - sellTRC;
 
-  // Net after 10% tax
+  // Net after 2% tax
   let netUSD = sellTRC * targetPrice * 0.98;
 
   tableHTML += `
