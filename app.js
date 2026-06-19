@@ -186,13 +186,6 @@ document.getElementById("polLiquidity").innerText =
   polLiquidity.toFixed(4);
 
 // ===== REAL USDT BALANCE =====
-let usdtBalance = await ico.getUSDTBalance();
-usdtBalance = Number(
-  ethers.utils.formatUnits(usdtBalance, USDT_DECIMALS)
-);
-
-document.getElementById("usdtBalanceContract").innerText =
-  usdtBalance.toFixed(2);
 
 
 // ===== TRC BALANCE IN CONTRACT =====
