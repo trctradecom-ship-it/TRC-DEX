@@ -12,9 +12,9 @@ display:flex;
 flex-wrap:wrap;
 justify-content:space-between;
 align-items:center;
-padding:12px;
+padding:0 !important;
 background:#111;
-gap:8px;
+gap:0 !important;
 }
 
 header h2{
