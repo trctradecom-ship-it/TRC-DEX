@@ -1031,23 +1031,20 @@ line-height:1;
 
 
 
+/* 🔧 TRC DEX LOGO */
 .trc-dex-logo{
-    display:block;
-    width:170px;
-    max-width:65%;
-    height:auto;
-    margin:0 auto 5px;
-    padding:0;
+    display:block !important;
+    width:170px !important;
+    max-width:65% !important;
+    height:auto !important;
+    margin:0 auto 5px !important;
+    padding:0 !important;
 }
 
-@media (max-width:600px){
-    .trc-dex-logo{
-        width:170px;
-        max-width:65%;
-        height:auto;
-        margin:0 auto 5px;
-        padding:0;
-    }
+/* 🔧 REMOVE HEADER SPACE */
+header{
+    padding:5px 10px !important;
+    gap:0 !important;
 }
 
 
