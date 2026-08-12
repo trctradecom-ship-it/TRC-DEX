@@ -1032,15 +1032,22 @@ line-height:1;
 
 
 
-.trc-dex-logo{
-    display:block !important;
-    width:170px !important;
-    max-width:65% !important;
-    height:auto !important;
-    margin:0 auto !important;
-    padding:0 !important;
-}
+@media (max-width:500px){
 
+    header{
+        flex-direction:column !important;
+        align-items:center !important;
+        padding:5px 10px !important;
+        gap:4px !important;
+    }
+
+    .trc-dex-logo{
+        width:170px !important;
+        margin:0 auto 2px !important;
+        padding:0 !important;
+    }
+
+}
 
 
 
