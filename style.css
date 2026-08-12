@@ -1031,15 +1031,6 @@ line-height:1;
 
 
 
-/* 🔴 FINAL LOGO POSITION FIX */
-header{
-    padding:0 !important;
-    gap:0 !important;
-}
-
-header h2{
-    display:none !important;
-}
 
 .trc-dex-logo{
     display:block !important;
