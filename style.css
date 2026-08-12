@@ -1031,4 +1031,24 @@ line-height:1;
 
 
 
+.trc-dex-logo{
+    display:block;
+    width:220px;
+    max-width:75%;
+    height:auto;
+    margin:0 auto 12px;
+}
+
+@media (max-width:600px){
+    .trc-dex-logo{
+        width:170px;
+        max-width:65%;
+        margin:0 auto 10px;
+    }
+}
+
+
+
+
+
 
